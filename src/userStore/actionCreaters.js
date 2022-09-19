@@ -11,10 +11,10 @@ export const actionSetUser = ({ email, role, serverMessage }) => ({
 });
 
 export const actionSetUserAsync = ({ email, password }) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const setLogin = async () => {
       try {
-        const response = await axiosInstance.post('/users/login', {
+        const response = await axiosInstance.post('/auth/login', {
           email,
           password
         });
@@ -33,10 +33,14 @@ export const actionSetUserAsync = ({ email, password }) => {
       }
     }
 
-    setLogin()
-      .then(({ email, role, serverMessage }) => {dispatch(actionSetUser({ email, role, serverMessage }))})
-      .catch(e => console.log(e));
+    // setLogin()
+    //   .then(({ email, role, serverMessage }) => {dispatch(actionSetUser({ email, role, serverMessage }))})
+    //   .catch(e => console.log(e));
 
+    // const { email, role, serverMessage } = await setLogin();
+    // dispatch(actionSetUser({ email, role, serverMessage }));
+
+    dispatch(actionSetUser({...await setLogin()}));
   }
 }
 
