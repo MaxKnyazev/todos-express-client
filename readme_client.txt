@@ -1,4 +1,4 @@
-1) actionCreaters.js -- три варианта обработки промиса в асинхронном экшене
++++ 1) actionCreaters.js -- три варианта обработки промиса в асинхронном экшене
 
 2) создать в src каталог stores, 
    куда поместить каталоги usersStore, authStore, todosStore
