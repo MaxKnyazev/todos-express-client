@@ -62,7 +62,14 @@ function App() {
 
         <button className="login__submit" onClick={() => dispatch(actionSetUserAsync({ email, password }))}>Submit</button>
 
-        <span className="login__result">{JSON.stringify(serverMessage)}</span>
+        <div>
+          <span className="login__result">{JSON.stringify(serverMessage.accessToken)}</span>
+        </div>
+
+        { serverMessage.error !== null ? (
+          <span className="login__result">{JSON.stringify(serverMessage)}</span>
+        ) : null}
+
         <span className="login__result">{JSON.stringify(emailUser)}</span>
         <span className="login__result">{JSON.stringify(role)}</span>
       </section>
