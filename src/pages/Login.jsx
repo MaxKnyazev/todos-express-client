@@ -1,37 +1,26 @@
-import './App.css';
+import './Login.css';
 import { useState } from 'react';
 import { axiosInstance } from '../utils/axiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionSetUserAsync } from '../userStore/actionCreaters';
+import { useNavigate } from "react-router-dom";
 
-function App() {
+const Login = () => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  const navigate = useNavigate();
   // const [ serverMessage, setServerMessage ] = useState('***********************');
 
   const dispatch = useDispatch();
-  const { email: emailUser, role, serverMessage } = useSelector(state => state.setUser);
-  console.log(emailUser);
-  console.log(role);
+  const { email: emailUser, role, serverMessage, isAuth } = useSelector(state => state.setUser);
+  // console.log(emailUser);
+  // console.log(role);
 
   const buttonSubmitHandler = (email, password) => {
-    try {
-      // dispatch(actionSetUserAsync({ email, password }));
-
-      // const response = await axiosInstance.post('/users/login', {
-      //   email,
-      //   password
-      // });
-      // console.log(response);
-      // setServerMessage(response.data);
-      // dispatch(actionSetUser({
-      //   email: response.data.email,
-      //   role: response.data.role,
-      // }))
-    } catch (error) {
-      // console.log(error.response.status)
-      // console.error(error);
-      // setServerMessage(error.response.data.error);
+    dispatch(actionSetUserAsync({ email, password }));
+    if (isAuth) {
+      // TODO: navigate перекидывает на HomePage моментально, не дожидаясь ответа от сервера. Нужно создать логику для navigate. 
+      navigate('/');
     }
   }
 
@@ -60,7 +49,7 @@ function App() {
           </label>
         </div>
 
-        <button className="login__submit" onClick={() => dispatch(actionSetUserAsync({ email, password }))}>Submit</button>
+        <button className="login__submit" onClick={() => {buttonSubmitHandler(email, password)}}>Submit</button>
 
         <div>
           <span className="login__result">{JSON.stringify(serverMessage.accessToken)}</span>
@@ -77,4 +66,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;

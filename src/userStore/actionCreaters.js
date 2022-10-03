@@ -1,9 +1,10 @@
 import { SET_USER } from './actionTypes';
 import { axiosInstance } from '../utils/axiosInstance';
 
-export const actionSetUser = ({ email, role, serverMessage }) => ({
+export const actionSetUser = ({ isAuth, email, role, serverMessage }) => ({
   type: SET_USER,
   payload: {
+    isAuth,
     email,
     role,
     serverMessage,
@@ -20,12 +21,14 @@ export const actionSetUserAsync = ({ email, password }) => {
         });
 
         return {
+          isAuth: true,
           email: response.data.email,
           role: response.data.role,
           serverMessage: response.data,
         }
       } catch (error) {
         return {
+          isAuth: false,
           email: '',
           role: '',
           serverMessage: error.response.data.error,

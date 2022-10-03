@@ -4,6 +4,7 @@ const initialState = {
   role: 'user',
   email: '',
   serverMessage: '',
+  isAuth: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -14,6 +15,7 @@ export const userReducer = (state = initialState, action) => {
         email: action.payload.email,
         role: action.payload.role,
         serverMessage: action.payload.serverMessage,
+        isAuth: action.payload.isAuth,
     }
     default:
       return state
