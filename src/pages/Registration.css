@@ -1,0 +1,10 @@
+.register__email {
+  margin-bottom: 1.5vh;
+}
+
+.error {
+  position: absolute;
+  color: rgb(240 0 0);
+  /* margin-top: 3vh; */
+  top: 80vh;
+}
