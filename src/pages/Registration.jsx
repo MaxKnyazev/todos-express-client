@@ -51,6 +51,7 @@ const Registration = () => {
         return;
       }
 
+      // TODO: переносить ли запрос куда-нибудь?
       await axiosInstance.post('/auth/register', {
         email,
         password

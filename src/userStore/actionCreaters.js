@@ -20,6 +20,11 @@ export const actionSetUserAsync = ({ email, password }) => {
           password
         });
 
+        localStorage.setItem('token', response.data.accessToken);
+        // console.log('===================================== token:')
+        // console.log(response.data.accessToken);
+
+
         return {
           isAuth: true,
           email: response.data.email,
@@ -46,3 +51,14 @@ export const actionSetUserAsync = ({ email, password }) => {
     dispatch(actionSetUser({...await setLogin()}));
   }
 }
+
+// export const registration = async ({ email, password }) => {
+//   try {
+//     await axiosInstance.post('/auth/register', {
+//       email,
+//       password
+//     });
+//   } catch(err) {
+//     console.log(err);
+//   }
+// }
