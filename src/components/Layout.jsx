@@ -1,8 +1,16 @@
 import { NavLink, Outlet } from "react-router-dom"
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionLogout } from '../userStore/actionCreaters';
 
 const Layout = () => {
   const { email: emailUser, isAuth } = useSelector(state => state.setUser);
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    console.log('logout');
+    dispatch(actionLogout());
+    localStorage.removeItem('token');
+  }
 
   return (
     <>
@@ -14,7 +22,7 @@ const Layout = () => {
             { isAuth ? (
               <>
                 <span>{emailUser}</span>
-                <li className='nav__item'><NavLink className='nav__link' to='/auth/logout'>Logout</NavLink></li>
+                <li onClick={logoutHandler} className='nav__item'><NavLink className='nav__link' to='/'>Logout</NavLink></li>
               </>
             ) : (
               <>

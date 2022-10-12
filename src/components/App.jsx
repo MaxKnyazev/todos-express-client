@@ -5,10 +5,13 @@ import Login from '../pages/Login';
 import NotFound404 from '../pages/NotFound404';
 import Registration from '../pages/Registration';
 import Todos from '../pages/Todos';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import Layout from './Layout';
 
 const App = () => {
+  const { isAuth } = useSelector(state => state.setUser);
 
   return (
     <>
@@ -17,8 +20,8 @@ const App = () => {
           <Route index element={<HomePage />}/>
           <Route path='/auth/login' element={<Login />}/>
           <Route path='/auth/register' element={<Registration />}/>
-          <Route path='/auth/logout' element={<HomePage />}/>
-          <Route path='/todos' element={<Todos />}/>
+          {isAuth && <Route path='/todos' element={<Todos />}/>}
+          {!isAuth && <Route path='/todos' element={<Navigate to='/auth/login' replace={true}/>}/>}
           <Route path='*' element={<NotFound404 />}/>
         </Route>
       </Routes>
@@ -27,4 +30,6 @@ const App = () => {
   );
 }
 
+
 export default App;
+

@@ -1,4 +1,4 @@
-import { SET_USER } from './actionTypes';
+import { SET_USER, LOGOUT } from './actionTypes';
 import { axiosInstance } from '../utils/axiosInstance';
 
 export const actionSetUser = ({ isAuth, email, role, serverMessage }) => ({
@@ -9,6 +9,10 @@ export const actionSetUser = ({ isAuth, email, role, serverMessage }) => ({
     role,
     serverMessage,
   },
+});
+
+export const actionLogout = () => ({
+  type: LOGOUT,
 });
 
 export const actionSetUserAsync = ({ email, password }) => {
