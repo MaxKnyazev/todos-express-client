@@ -56,13 +56,36 @@ export const actionSetUserAsync = ({ email, password }) => {
   }
 }
 
-// export const registration = async ({ email, password }) => {
-//   try {
-//     await axiosInstance.post('/auth/register', {
-//       email,
-//       password
-//     });
-//   } catch(err) {
-//     console.log(err);
-//   }
-// }
+export const actionCurrentUserAsync = () => {
+  return async (dispatch) => {
+    const refreshUser = async () => {
+      try {
+        const response = await axiosInstance.get('/auth/currentUser', {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+          }
+        });
+
+        localStorage.setItem('token', response.data.accessToken);
+
+        console.log(response);
+        return {
+          isAuth: true,
+          email: response.data.user.email,
+          role: response.data.user.role,
+          serverMessage: 'success',
+        }
+      } catch (error) {
+        console.log(error);
+        return {
+          isAuth: false,
+          email: '',
+          role: '',
+          serverMessage: error?.response?.data?.error,
+        }
+      }
+    }
+
+    dispatch(actionSetUser({...await refreshUser()}));
+  }
+}
