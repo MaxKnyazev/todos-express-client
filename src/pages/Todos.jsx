@@ -1,26 +1,53 @@
 // import { actionCurrentUserAsync } from '../userStore/actionCreaters';
 import { useSelector, useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-// import { useEffect } from 'react';
+// import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Todos = () => {
   // const dispatch = useDispatch();
   const { isAuth } = useSelector(state => state.setUser);
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-    // dispatch(actionCurrentUserAsync());
-  // }, [dispatch]);
+  useEffect(() => {
+    if (!isAuth) {
+      navigate('/');
+    }
+  }, [isAuth, navigate]);
 
   return (
     <>
-      { !isAuth ? <Navigate to='/' replace={true}/> 
-      : (
-        <>
-          <h1>Todos</h1>
-        </>
-      )}
+      <h1>Todos</h1> 
     </>
   )
 }
 
 export default Todos;
+
+
+
+
+//********************************************************************** */
+// // import { actionCurrentUserAsync } from '../userStore/actionCreaters';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { Navigate } from 'react-router-dom';
+// // import { useEffect } from 'react';
+
+// const Todos = () => {
+//   // const dispatch = useDispatch();
+//   const { isAuth } = useSelector(state => state.setUser);
+
+//   // useEffect(() => {
+//     // dispatch(actionCurrentUserAsync());
+//   // }, [dispatch]);
+
+//   //-----------------------------------------------------------?????????
+//   return (
+//     <>
+//       { !isAuth && <Navigate to='/' replace={true}/> }
+//       { isAuth && <h1>Todos</h1> }
+//     </>
+//   )
+// }
+
+// export default Todos;

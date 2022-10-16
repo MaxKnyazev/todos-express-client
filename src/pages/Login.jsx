@@ -1,15 +1,15 @@
 import './Login.css';
 import { useState } from 'react';
-import { axiosInstance } from '../utils/axiosInstance';
+// import { axiosInstance } from '../utils/axiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionSetUserAsync } from '../userStore/actionCreaters';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 
 const Login = () => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const [ serverMessage, setServerMessage ] = useState('***********************');
 
   const dispatch = useDispatch();

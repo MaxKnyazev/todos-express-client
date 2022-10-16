@@ -17,6 +17,7 @@ export const actionLogout = () => ({
 
 export const actionSetUserAsync = ({ email, password }) => {
   return async (dispatch) => {
+    
     const setLogin = async () => {
       try {
         const response = await axiosInstance.post('/auth/login', {
@@ -27,7 +28,6 @@ export const actionSetUserAsync = ({ email, password }) => {
         localStorage.setItem('token', response.data.accessToken);
         // console.log('===================================== token:')
         // console.log(response.data.accessToken);
-
 
         return {
           isAuth: true,
@@ -40,7 +40,7 @@ export const actionSetUserAsync = ({ email, password }) => {
           isAuth: false,
           email: '',
           role: '',
-          serverMessage: error.response.data.error,
+          serverMessage: error?.response?.data?.error,
         }
       }
     }
@@ -52,12 +52,13 @@ export const actionSetUserAsync = ({ email, password }) => {
     // const { email, role, serverMessage } = await setLogin();
     // dispatch(actionSetUser({ email, role, serverMessage }));
 
-    dispatch(actionSetUser({...await setLogin()}));
+    dispatch(actionSetUser(await setLogin()));
   }
 }
 
 export const actionCurrentUserAsync = () => {
   return async (dispatch) => {
+
     const refreshUser = async () => {
       try {
         const response = await axiosInstance.get('/auth/currentUser', {
@@ -68,7 +69,9 @@ export const actionCurrentUserAsync = () => {
 
         localStorage.setItem('token', response.data.accessToken);
 
+        console.log('actionCurrentUserAsync-- try -------------------------------');
         console.log(response);
+
         return {
           isAuth: true,
           email: response.data.user.email,
@@ -76,6 +79,7 @@ export const actionCurrentUserAsync = () => {
           serverMessage: 'success',
         }
       } catch (error) {
+        console.log('actionCurrentUserAsync-- catch -- ERROR ---------------------');
         console.log(error);
         return {
           isAuth: false,
@@ -86,6 +90,6 @@ export const actionCurrentUserAsync = () => {
       }
     }
 
-    dispatch(actionSetUser({...await refreshUser()}));
+    dispatch(actionSetUser(await refreshUser()));
   }
 }
