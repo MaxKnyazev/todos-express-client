@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: rgb(39, 39, 39);
+  height: 12vh;
+}
+
+  .header__logo {
+    margin-left: 10vw;
+    color: #fff;
+  }
+
+  /* .header__nav {
+    background-color: red;
+    display: flex;
+    justify-content: center;
+  } */
+
+  .nav__list {
+    display: flex;
+    gap: 1.5rem;
+    margin-right: 10vw;
+  }
+
+    .nav__item {
+      list-style: none;
+    }
+
+      .nav__link {
+        color: rgb(206, 206, 206);
+        font-size: 18px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 200ms linear;
+      }
+        .nav__link:hover {
+          color: #fff;
+        }
+
+        .active {
+          color: rgb(112, 112, 255);
+        }
+          .active:hover {
+            color: rgb(151, 151, 255);
+          }

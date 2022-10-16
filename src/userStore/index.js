@@ -4,7 +4,7 @@ import { userReducer } from './userReducer';
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
-  setUser: userReducer
+  userState: userReducer
 });
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

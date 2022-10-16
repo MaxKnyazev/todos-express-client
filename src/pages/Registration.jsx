@@ -24,7 +24,6 @@ const Registration = () => {
     if (password.length < 5) return 'Password must be at least 5 characters';
     if (password === password.toUpperCase()) return 'Password must contain at least one small character';
     if (password === password.toLowerCase()) return 'Password must contain at least one large character';
-    
     let count = 0;
     for(let i = 0; i < password.length; i++) {
       if (!numberChar.includes(password[i])) count++;
@@ -79,7 +78,6 @@ const Registration = () => {
   const doublePasswordInputHandler = (e) => {
     setDoublePassword(e.target.value);
   }
-
 
   return (
     <div className="App">

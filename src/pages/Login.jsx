@@ -13,7 +13,7 @@ const Login = () => {
   // const [ serverMessage, setServerMessage ] = useState('***********************');
 
   const dispatch = useDispatch();
-  const { email: emailUser, role, serverMessage, isAuth } = useSelector(state => state.setUser);
+  const { email: emailUser, role, serverMessage, isAuth } = useSelector(state => state.userState);
   // console.log(emailUser);
   // console.log(role);
 
