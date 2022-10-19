@@ -1,6 +1,11 @@
+import Home from '../components/Home';
+import './HomePage.css';
+
 const HomePage = () => {
   return (
-    <h1>HomePage</h1>
+    <section className='container'>
+      <Home />
+    </section>
   )
 }
 

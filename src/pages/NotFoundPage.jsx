@@ -1,7 +1,18 @@
-const NotFound404 = () => {
+import './NotFoundPage.css';
+
+const NotFoundPage = () => {
   return (
-    <h1>NotFound404</h1>
+    <>
+      <div className="wrapper0">
+        <div className="errortext">
+          <div className="error"> </div>
+          <div className="opps"> </div>
+          <div className="looks"> </div>
+        </div>
+      </div>
+      <div className="errorbk"> </div>
+    </>
   )
 }
 
-export default NotFound404;
+export default NotFoundPage;
