@@ -1,15 +1,17 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { actionLogout } from '../userStore/actionCreaters';
+// import { actionLogout } from '../userStore/actionCreaters';
+import { logout } from '../storesRtk/authSlice';
 import './Header.css';
 
 const Header = () => {
-  const { email, isAuth } = useSelector(state => state.userState);
+  const { email, isAuth } = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
-    // console.log('logout');
-    dispatch(actionLogout());
+    console.log('logout');
+    // dispatch(actionLogout());
+    dispatch(logout());
     localStorage.removeItem('token');
   }
 

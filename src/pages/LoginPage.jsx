@@ -4,7 +4,7 @@ import Login from '../components/Login';
 import './LoginPage.css';
 
 const LoginPage = () => {
-  const { isAuth } = useSelector((state) => state.userState);
+  const { isAuth } = useSelector(state => state.authReducer);
   return (
     <div className='container'>
       {

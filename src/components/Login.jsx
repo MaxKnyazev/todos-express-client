@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionSetUserAsync } from '../userStore/actionCreaters';
+// import { actionSetUserAsync } from '../userStore/actionCreaters';
+import { actionSetUserAsync } from '../storesRtk/authSlice';
 import './Login.css';
 
 const Login = () => {
@@ -11,7 +12,7 @@ const Login = () => {
     email: emailUser,
     role,
     serverMessage,
-  } = useSelector((state) => state.userState);
+  } = useSelector((state) => state.authReducer);
 
   const buttonSubmitHandler = async (email, password) => {
     dispatch(actionSetUserAsync({ email, password }));
@@ -60,11 +61,8 @@ const Login = () => {
           Submit
         </button>
         <div>
-          <span className='login__result'>
-            {JSON.stringify(serverMessage.accessToken)}
-          </span>
         </div>
-        {serverMessage.error !== null ? (
+        {serverMessage ? (
           <span className='login__result'>
             {JSON.stringify(serverMessage)}
           </span>

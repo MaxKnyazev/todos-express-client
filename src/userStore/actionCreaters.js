@@ -76,6 +76,7 @@ export const actionCurrentUserAsync = () => {
           isAuth: true,
           email: response.data.user.email,
           role: response.data.user.role,
+          error: '',
           serverMessage: 'success',
         }
       } catch (error) {
@@ -85,6 +86,7 @@ export const actionCurrentUserAsync = () => {
           isAuth: false,
           email: '',
           role: '',
+          error,
           serverMessage: error?.response?.data?.error,
         }
       }
