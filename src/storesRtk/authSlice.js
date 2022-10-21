@@ -17,8 +17,8 @@ export const actionSetUserAsync = createAsyncThunk(
 
       const payload = {
         isAuth: true,
-        email: response.data.email,
-        role: response.data.role,
+        email: response.data.user.email,
+        role: response.data.user.role,
         error: '',
         serverMessage: 'success',
       }
