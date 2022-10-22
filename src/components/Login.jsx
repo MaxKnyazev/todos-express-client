@@ -1,21 +1,23 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 // import { actionSetUserAsync } from '../userStore/actionCreaters';
-import { actionSetUserAsync } from '../storesRtk/authSlice';
+// import { actionSetUserAsync } from '../storesRtk/authSlice';
+import { observer } from 'mobx-react-lite';
 import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const {
-    email: emailUser,
-    role,
-    serverMessage,
-  } = useSelector((state) => state.authReducer);
+  // const dispatch = useDispatch();
+  // const {
+  //   email: emailUser,
+  //   role,
+  //   serverMessage,
+  // } = useSelector((state) => state.authReducer);
 
   const buttonSubmitHandler = async (email, password) => {
-    dispatch(actionSetUserAsync({ email, password }));
+    // dispatch(actionSetUserAsync({ email, password }));
+    console.log('buttonSubmitHandler')
   };
 
   const emailInputHandler = (e) => {
@@ -25,6 +27,12 @@ const Login = () => {
   const passwordInputHandler = (e) => {
     setPassword(e.target.value);
   };
+
+  
+let serverMessage = '*** serverMessage ***'
+let emailUser = '*** emailUser ***'
+let role = '*** role ***'
+
 
   return (
     <>
@@ -74,4 +82,4 @@ const Login = () => {
   )
 };
 
-export default Login;
+export default observer(Login);

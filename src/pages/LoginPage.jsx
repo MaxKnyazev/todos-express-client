@@ -1,10 +1,13 @@
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import Login from '../components/Login';
+import authStore from '../storesMobx/authStore';
+import { observer } from 'mobx-react-lite';
 import './LoginPage.css';
 
 const LoginPage = () => {
-  const { isAuth } = useSelector(state => state.authReducer);
+  // const { isAuth } = useSelector(state => state.authReducer);
+  const { isAuth } = authStore;
   return (
     <div className='container'>
       {
@@ -16,4 +19,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default observer(LoginPage);

@@ -1,19 +1,27 @@
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 // import { actionLogout } from '../userStore/actionCreaters';
-import { logout } from '../storesRtk/authSlice';
+// import { logout } from '../storesRtk/authSlice';
+import authStore from '../storesMobx/authStore';
+import { observer } from 'mobx-react-lite';
 import './Header.css';
 
 const Header = () => {
-  const { email, isAuth } = useSelector(state => state.authReducer);
-  const dispatch = useDispatch();
+  // const { email, isAuth } = useSelector(state => state.authReducer);
+  // const dispatch = useDispatch();
+  const { email, isAuth } = authStore;
 
   const logoutHandler = () => {
-    console.log('logout');
     // dispatch(actionLogout());
-    dispatch(logout());
+    // dispatch(logout());
+    authStore.logout();
     localStorage.removeItem('token');
   }
+
+
+// let isAuth = false
+// let email = '+++ email +++'
+
 
   return (
     <header className='header'>
@@ -47,4 +55,4 @@ const Header = () => {
   )
 }
 
-export default Header;
+export default observer(Header);
