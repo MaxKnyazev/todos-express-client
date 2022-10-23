@@ -9,19 +9,14 @@ import './Header.css';
 const Header = () => {
   // const { email, isAuth } = useSelector(state => state.authReducer);
   // const dispatch = useDispatch();
-  const { email, isAuth } = authStore;
+  const { email, isAuth, logout } = authStore;
 
   const logoutHandler = () => {
     // dispatch(actionLogout());
     // dispatch(logout());
-    authStore.logout();
+    logout();
     localStorage.removeItem('token');
   }
-
-
-// let isAuth = false
-// let email = '+++ email +++'
-
 
   return (
     <header className='header'>

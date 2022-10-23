@@ -18,11 +18,11 @@ const App = () => {
   // const { isAuth } = useSelector(state => state.authReducer);
   // const dispatch = useDispatch();
 
-  const { isAuth } = authStore;
+  const { isAuth, actionCurrentUserAsync } = authStore;
 
   useEffect(() => {
-    authStore.actionCurrentUserAsync();
-  }, []);
+    actionCurrentUserAsync();
+  }, [actionCurrentUserAsync]);
 
   // useEffect(() => {
   //   dispatch(actionCurrentUserAsync());

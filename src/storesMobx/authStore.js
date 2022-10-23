@@ -20,25 +20,29 @@ class AuthStore {
       this.serverMessage = '';
       this.error = '';
       this.isAuth = false;
-      })
+    })
   }
 
   setSuccessAuth(response) {
     console.log('AuthStore.setSuccessAuth(response) -- MobX---------------------');
-    this.role = response.data.user.role;
-    this.email = response.data.user.email;
-    this.serverMessage = '*** Success';
-    this.error = '';
-    this.isAuth = true;
+    runInAction(() => {
+      this.role = response.data.user.role;
+      this.email = response.data.user.email;
+      this.serverMessage = '*** Success';
+      this.error = '';
+      this.isAuth = true;
+    })
   }
 
   setErrorAuth(error) {
     console.log('AuthStore.setErrorAuth(error) -- MobX---------------------');
-    this.role = 'user';
-    this.email = '';
-    this.serverMessage = '*** Error';
-    this.error = error.message;
-    this.isAuth = false;
+    runInAction(() => {
+      this.role = 'user';
+      this.email = '';
+      this.serverMessage = '*** Error';
+      this.error = error.message;
+      this.isAuth = false;
+    })
   }
 
   async actionCurrentUserAsync() {
@@ -54,79 +58,37 @@ class AuthStore {
 
       localStorage.setItem('token', response.data.accessToken);
   
-      runInAction(this.setSuccessAuth(response));
+      this.setSuccessAuth(response);
+
     } catch (error) {
       console.log('actionCurrentUserAsync -- catch -- ERROR MobX---------------------');
       console.log(error);
 
-      runInAction(this.setErrorAuth(error));
+      this.setErrorAuth(error);
     }
   }
 
-  //TODO :: -- 1) actionSetUserAsync
-  //TODO :: -- 2) проверить подключение МовХ во всех нужных модулях
-  //TODO :: -- 3) observer во всех нужных модулях
-  //TODO :: +- 4) <unnamed action> ???
+  async actionSetUserAsync({email, password}) {
+    try {
+      console.log('actionSetUserAsync -- try MobX-------------------------------');
+      const response = await axiosInstance.post('/auth/login', {
+        email,
+        password
+      });
+      
+      console.log(response);
 
-  // export const actionSetUserAsync = createAsyncThunk(
-  //   'auth/actionSetUserAsync',
-  //   async function({email, password}, {rejectWithValue, dispatch}) {
-  //     try {
-  //       const response = await axiosInstance.post('/auth/login', {
-  //         email,
-  //         password
-  //       });
+      localStorage.setItem('token', response.data.accessToken);
   
-  //       console.log('actionSetUserAsync -- try -------------------------------');
-  //       console.log(response);
-  
-  //       localStorage.setItem('token', response.data.accessToken);
-  
-  //       const payload = {
-  //         isAuth: true,
-  //         email: response.data.user.email,
-  //         role: response.data.user.role,
-  //         error: '',
-  //         serverMessage: 'success',
-  //       }
-  
-  //       dispatch(setUser(payload));
-  
-  //     } catch (error) {
-  
-  //       console.log('actionSetUserAsync -- catch -- ERROR ---------------------');
-  //       console.log(error);
-  
-  //       const payload = {
-  //         isAuth: false,
-  //         email: '',
-  //         role: '',
-  //         serverMessage: error?.response?.data?.error,
-  //       }
-  
-  //       dispatch(setUser(payload));
-  
-  //       return rejectWithValue(`actionSetUserAsync-- catch -- ERROR: ${error.message}`);
-  //     }
-  //   }
-  // )
+      this.setSuccessAuth(response);
+      
+    } catch (error) {
+      console.log('actionSetUserAsync -- catch -- ERROR MobX---------------------');
+      console.log(error);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      this.setErrorAuth(error);
+    }
+  }
 }
 
 export default new AuthStore();
