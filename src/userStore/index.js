@@ -1,10 +1,10 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { composeWithDevTools} from 'redux-devtools-extension';
-import { userReducer } from './userReducer';
-import thunk from 'redux-thunk';
+// import { createStore, combineReducers, applyMiddleware } from 'redux';
+// import { composeWithDevTools} from 'redux-devtools-extension';
+// import { userReducer } from './userReducer';
+// import thunk from 'redux-thunk';
 
-const rootReducer = combineReducers({
-  userState: userReducer
-});
+// const rootReducer = combineReducers({
+//   userState: userReducer
+// });
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+// export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
