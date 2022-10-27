@@ -3,23 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { actionLogout } from '../userStore/actionCreaters';
 // import { logout } from '../storesRtk/authSlice';
 // import authStore from '../storesMobx/authStore';
+import { actionLogout } from '../storessaga/actionCreaters';
 // import { observer } from 'mobx-react-lite';
 import './Header.css';
 
 const Header = () => {
   const { email, isAuth } = useSelector(state => state.auth);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const { email, isAuth, logout } = authStore;
 
   const logoutHandler = () => {
-    // dispatch(actionLogout());
+    dispatch(actionLogout());
     // dispatch(logout());
 
-//***************************************************************************** */
-// TODO :: разобраться с  loguot
-// TODO :: разобраться с confirm
-// logout();
-//***************************************************************************** */
     localStorage.removeItem('token');
   }
 

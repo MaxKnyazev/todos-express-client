@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
@@ -8,25 +8,26 @@ import RegistrationPage from '../pages/RegistrationPage';
 import TodosPage from '../pages/TodosPage';
 // import { actionCurrentUserAsync } from '../userStore/actionCreaters';
 // import { actionCurrentUserAsync } from '../storesRtk/authSlice';
-import authStore from '../storesMobx/authStore';
-import { observer } from 'mobx-react-lite';
+import { actionConfirmAsync } from '../storessaga/actionCreaters';
+// import authStore from '../storesMobx/authStore';
+// import { observer } from 'mobx-react-lite';
 import Layout from './Layout';
 import './App.css';
 
 const App = () => {
   // const { isAuth } = useSelector(state => state.userState);
-  // const { isAuth } = useSelector(state => state.authReducer);
-  // const dispatch = useDispatch();
+  const { isAuth } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
-  const { isAuth, actionCurrentUserAsync } = authStore;
-
-  useEffect(() => {
-    actionCurrentUserAsync();
-  }, [actionCurrentUserAsync]);
+  // const { isAuth, actionCurrentUserAsync } = authStore;
 
   // useEffect(() => {
-  //   dispatch(actionCurrentUserAsync());
-  // }, [dispatch]);
+  //   actionCurrentUserAsync();
+  // }, [actionCurrentUserAsync]);
+
+  useEffect(() => {
+    dispatch(actionConfirmAsync());
+  }, [dispatch]);
 
   return (
     <Routes>
@@ -42,4 +43,4 @@ const App = () => {
   );
 }
 
-export default observer(App);
+export default App;

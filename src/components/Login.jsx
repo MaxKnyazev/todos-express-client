@@ -17,6 +17,7 @@ const Login = () => {
   const {
     email: emailUser,
     role,
+    error,
     serverMessage,
   } = useSelector(state => state.auth);
 
@@ -77,9 +78,20 @@ const Login = () => {
         ) : null}
         <span className='login__result'>{JSON.stringify(emailUser)}</span>
         <span className='login__result'>{JSON.stringify(role)}</span>
+        {error ? (
+          <span className='login__result'>
+            {JSON.stringify(error)}
+          </span>
+        ) : null}
       </section>
     </>
   )
 };
 
 export default Login;
+
+
+
+// TODO ::***************************************************************************** */
+// TODO :: разобраться с выводом ошибки, в консоли есть, а до стейта не доходит
+// TODO ::***************************************************************************** */

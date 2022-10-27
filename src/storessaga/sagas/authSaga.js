@@ -1,6 +1,6 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { LOGIN, CONFIRM} from '../actionTypes';
-import { actionSetUserToStore, actionErrorLogin, actionLogout } from '../actionCreaters';
+import { actionSetUserToStore } from '../actionCreaters';
 import { axiosInstance } from '../../utils/axiosInstance';
 
 // const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -14,17 +14,6 @@ import { axiosInstance } from '../../utils/axiosInstance';
     serverMessage,
     error,
     isAuth,
-  },
-});
-
-export const actionLogout = () => ({
-  type: LOGOUT,
-});
-
-export const actionErrorLogin = ({ error }) => ({
-  type: ERROR_LOGIN,
-  payload: {
-    error,
   },
 });
  */
@@ -66,12 +55,17 @@ const {email, password} = args.payload;
 
       console.log('asyncLoginWorker -- catch -- ERROR ---------------------');
       console.log(error);
+      console.log(error.response.data.error);
+
+// TODO ::***************************************************************************** */
+// TODO :: разобраться с выводом ошибки, в консоли есть, а до стейта не доходит
+// TODO ::***************************************************************************** */
 
       const payload = {
         email: '',
         role: '',
         serverMessage: '*** Error :: authSaga.js --> asyncLoginWorker --> catch',
-        error: error,
+        error: error.response.data.error,
         isAuth: false,
       }
 
@@ -80,61 +74,55 @@ const {email, password} = args.payload;
 }
 
 export function* asyncConfirmWorker() {
-  // const state = yield select();
-  // const stateDelta = state.deltaer.delta;
-  // const stateDelay = state.delayer.delay;
+// --> actionCurrentUserAsync
 
-  // console.log(`--- state ---> `);
-  // console.log(state);
-  
-  // yield delay(stateDelay);
-  // yield put(actionDec(stateDelta));
-}
+    try {
+      const response = yield call(
+        axiosInstance.get,
+          '/auth/currentUser', 
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('token')}`,
+            }
+          }
+      );
+
+      console.log('actionCurrentUserAsync -- try -------------------------------');
+      console.log(response);
+
+      localStorage.setItem('token', response.data.accessToken);
+
+      const payload = {
+        isAuth: true,
+        email: response.data.user.email,
+        role: response.data.user.role,
+        error: '',
+        serverMessage: 'success',
+      }
+
+      yield put(actionSetUserToStore(payload));
+
+    } catch (error) {
+
+      console.log('asyncConfirmWorker -- catch -- ERROR ---------------------');
+      console.log(error);
+
+      const payload = {
+        email: '',
+        role: '',
+        serverMessage: '*** Error :: authSaga.js --> asyncConfirmWorker --> catch',
+        error: error,
+        isAuth: false,
+      }
+
+      yield put(actionSetUserToStore(payload));
+    }
+  }
 
 export function* authWatcher() {
   yield takeEvery(LOGIN, asyncLoginWorker);
   yield takeEvery(CONFIRM, asyncConfirmWorker);
 }
-
-
-
-
-// import { put, takeEvery, select } from 'redux-saga/effects';
-// import { INC_ASYNC, DEC_ASYNC} from '../store/actionTypes';
-// import { actionInc, actionDec } from '../store/actionCreaters';
-
-// const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-// function* asyncIncrementWorker() {
-//   const state = yield select();
-//   const stateDelta = state.deltaer.delta;
-//   const stateDelay = state.delayer.delay;
-
-//   console.log(`--- state ---> `);
-//   console.log(state);
-  
-//   yield delay(stateDelay);
-//   yield put(actionInc(stateDelta));
-// }
-
-// function* asyncDecrementWorker() {
-//   const state = yield select();
-//   const stateDelta = state.deltaer.delta;
-//   const stateDelay = state.delayer.delay;
-
-//   console.log(`--- state ---> `);
-//   console.log(state);
-  
-//   yield delay(stateDelay);
-//   yield put(actionDec(stateDelta));
-// }
-
-// export function* authWatcher() {
-//   yield takeEvery(INC_ASYNC, asyncIncrementWorker);
-//   yield takeEvery(DEC_ASYNC, asyncDecrementWorker);
-// }
-
-
 
 
 /***
@@ -152,71 +140,4 @@ export function* authWatcher() {
  * 
  * В воркерах реализуется асинхронность
  *    yield delay(stateDelay)
- */
-
-/**
- * 
- * 
- * 
-
-
-
-
-
-
-
-
-// export const actionSetUserAsync = createAsyncThunk(
-//   'auth/actionSetUserAsync',
-//   async function({email, password}, {rejectWithValue, dispatch}) {
-//     try {
-//       const response = await axiosInstance.post('/auth/login', {
-//         email,
-//         password
-//       });
-
-//       console.log('actionSetUserAsync -- try -------------------------------');
-//       console.log(response);
-
-//       localStorage.setItem('token', response.data.accessToken);
-
-//       const payload = {
-//         isAuth: true,
-//         email: response.data.user.email,
-//         role: response.data.user.role,
-//         error: '',
-//         serverMessage: 'success',
-//       }
-
-//       dispatch(setUser(payload));
-
-//     } catch (error) {
-
-//       console.log('actionSetUserAsync -- catch -- ERROR ---------------------');
-//       console.log(error);
-
-//       const payload = {
-//         isAuth: false,
-//         email: '',
-//         role: '',
-//         serverMessage: error?.response?.data?.error,
-//       }
-
-//       dispatch(setUser(payload));
-
-//       return rejectWithValue(`actionSetUserAsync-- catch -- ERROR: ${error.message}`);
-//     }
-//   }
-// );
-
-
-
-
-
-
-
-
-
-
- * 
  */
